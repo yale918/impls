@@ -12,19 +12,20 @@ server.on('request', function(request, response){
 		count++;
 		console.log("request "+count+" coming");
 		console.log(request.method+" : "+request.url);
-	}	
+	}
 
-	if(request.url=='/')	targetFile = "index.html";
-	else 					targetFile = "."+request.url;
-	
+	if(request.url=='/')	targetFile = __dirname+"index.html";
+	else if(request.url=='/hello') response.end('hello world from server');
+	else 					targetFile = __dirname+request.url;
+
 	//var text = fs.readFileSync('test.html', "utf8");
 	fs.readFile(targetFile,function(err, data){
 		if(err) console.log(err);
 		response.end(data);
 	});
-	
+
 	//response.end(text);
-	
+
 });
 
 
@@ -33,5 +34,5 @@ server.on('request', function(request, response){
 
 server.listen(5566, function(){
 	console.log("server is listening on: "+5566);
-	
+
 });
